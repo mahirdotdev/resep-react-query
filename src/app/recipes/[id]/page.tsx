@@ -12,18 +12,22 @@ export default function RecipeDetailPage({ params }: { params: { id: string } })
     const id = useParams().id as string
   const recipeId = parseInt(id, 10);
 
-  const { data: recipe, isPending, isError, error } = useQuery({
-    queryKey: ['recipe', recipeId], // Kunci unik, termasuk ID resep
+  const { data: recipe, isLoading, isError, error } = useQuery({
+    queryKey: ['recipe', recipeId], 
     queryFn: () => getRecipeById(recipeId),
-    enabled: !!recipeId, // Hanya jalankan query jika recipeId valid
+    enabled: !!recipeId,
+    refetchOnReconnect:true,
+    refetchIntervalInBackground: true,
   });
 
-  if (isPending) {
-    return <div className="text-center mt-10">Loading detail resep...</div>;
+ 
+
+  if (isError ||  recipe === null) {
+    return <div className="text-center mt-10 text-red-500">Error: {error.message}</div>;
   }
 
-  if (isError) {
-    return <div className="text-center mt-10 text-red-500">Error: {error.message}</div>;
+   if (isLoading) {
+    return <div className="text-center mt-10">Loading detail resep...</div>;
   }
 
   if (!recipe) {

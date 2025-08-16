@@ -1,6 +1,6 @@
 // app/page.tsx
 
-"use client"; // useQuery adalah client hook
+"use client"; 
 
 import { useQuery } from "@tanstack/react-query";
 import { getRecipes } from "@/lib/api";
@@ -8,12 +8,19 @@ import RecipeCard from "@/components/recipe-card";
 import Link from "next/link";
 
 export default function HomePage() {
-  const { data, isLoading, isError, error } = useQuery({
+  // const [pending,setPending] = useState<boolean>(false);
+  // const [aError,setAError] = useState<boolean>(false);
+  // const [response,setResponse] = useState<boolean>(false);
+
+
+  
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['recipes'], // Kunci unik untuk query ini
     queryFn: getRecipes,    // Fungsi yang akan dijalankan
   });
 
-  if (isLoading) {
+  
+  if (isPending) {
     return <div className="text-center">Loading resep...</div>;
   }
 

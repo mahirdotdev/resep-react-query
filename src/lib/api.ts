@@ -7,6 +7,7 @@ const apiClient = axios.create({
   baseURL: 'https://dummyjson.com',
   headers: {
     'Content-Type': 'application/json',
+    'Authorization': 'Bearer 123456',
   },
 });
 
@@ -31,3 +32,8 @@ export const addRecipe = async (newRecipe: NewRecipeData): Promise<Recipe> => {
   // dummyjson akan mengembalikan resep yang baru dibuat beserta ID-nya
   return response.data;
 };
+
+//camel case
+export function useApa(){
+  return "apa";
+}
